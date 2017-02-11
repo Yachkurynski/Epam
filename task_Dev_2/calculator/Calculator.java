@@ -2,37 +2,60 @@ package task_Dev_2.calculator;
 
 import java.util.*;
 
+/**
+ * Calculate expression stored in list.
+ */
 class Calculator {
   private static final String DEV = "/";
   private static final String PROD = "*";
   private static final String DIF = "-";
   private static final String SUM = "+";
   
-  public String calculate_result(List<String> exprArr) {
+  /**
+   * Calculate results by priority of operations. Firstly they are divided and multiplication, 
+   * then sum and substraction.
+   * Returns nothing. 
+   * @param exprArr - list of string elements
+   */
+  public void calculateResult(List<String> exprArr) {
+	System.out.println("Size: " + exprArr.size());
+	try {
+	  reWriteList(PROD, DEV, exprArr);
+	  reWriteList(SUM, DIF, exprArr);
+	} catch (NumberFormatException ex) {
+	  System.out.println("Sorry! Incorrect number format!");
+	}
+  }
+  
+  /**
+   * Make intermidiate calculations of given operators and rewrite list. One of operators and two 
+   * operands are replaced with result.
+   * Params firstOper and secOper - operators for calculations.
+   * Returns nothing.
+   */
+  public void reWriteList(String firstOper, String secOper, List<String> exprArr) {
 	int i = 0;
-    System.out.println(exprArr.size());
-	
+
 	while (i < exprArr.size()) {
-	  if ((exprArr.get(i)).equals(PROD) || (exprArr.get(i)).equals(DEV)) {
-		exprArr.set(i - 1, calc_operation(exprArr.get(i - 1), exprArr.remove(i + 1), exprArr.remove(i)));
+	  if ((exprArr.get(i)).equals(firstOper) || (exprArr.get(i)).equals(secOper)) {
+		exprArr.set(i - 1, calcOneOperat(exprArr.get(i - 1), exprArr.remove(i + 1), exprArr.remove(i)));
 		i -= 1;
 	  }
 	  i++;
 	}
-	int j = 0;
-	while (j < exprArr.size()) {
-		System.out.println((exprArr.get(j)).equals(SUM));
-	  if ((exprArr.get(j)).equals(SUM) || (exprArr.get(j)).equals(DIF)) {
-		exprArr.set(j - 1, calc_operation(exprArr.get(j - 1), exprArr.remove(j + 1), exprArr.remove(j)));
-		j -= 1;
-		//System.out.println(exprArr);
-	  }
-	  j++;
+	
+	if (exprArr.size() == 1) {
+      System.out.println(exprArr.get(0));
 	}
-	return exprArr.get(0);
   }
   
-  public String calc_operation(String f_num, String s_num, String oper) {
+  /**
+   * Make one operation. 
+   * Params f_num and s_num - are operands.
+   * @param oper - operator.
+   * @return result of calculation.
+   */
+  public String calcOneOperat(String f_num, String s_num, String oper) {
 	double first_num = Double.parseDouble(f_num);
 	double second_num = Double.parseDouble(s_num);
 	double result = 0;
