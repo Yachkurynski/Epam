@@ -6,75 +6,83 @@ import java.util.*;
  * Calculate expression stored in list.
  */
 class Calculator {
-  private static final String DEV = "/";
-  private static final String PROD = "*";
-  private static final String DIF = "-";
-  private static final String SUM = "+";
+  private static final String DIVISION = "/";
+  private static final String MULTIPLICATION = "*";
+  private static final String SUBTRACTION = "-";
+  private static final String ADDITION = "+";
+  private static final String FORMAT_EXCEPTION_MESSAGE = "Incorrect number format! ";
   
   /**
-   * Calculate results by priority of operations. Firstly they are divided and multiplication, 
-   * then sum and substraction.
-   * Returns nothing. 
-   * @param exprArr - list of string elements
+   * Calculate results by priority of operations.
+   *
+   * @param exprArr - list with operands and operators
+   * @exception NumberFormatException Occurs when the operation of the incorrect number.
    */
   public void calculateResult(List<String> exprArr) {
-	System.out.println("Size: " + exprArr.size());
 	try {
-	  reWriteList(PROD, DEV, exprArr);
-	  reWriteList(SUM, DIF, exprArr);
+	  reWriteList(MULTIPLICATION, DIVISION, exprArr);
+	  reWriteList(ADDITION, SUBTRACTION, exprArr);
+	  if (exprArr.size() == 1) {
+        System.out.println(exprArr.get(0));
+	  }
 	} catch (NumberFormatException ex) {
-	  System.out.println("Sorry! Incorrect number format!");
+	  System.out.println(FORMAT_EXCEPTION_MESSAGE + ex.getLocalizedMessage());
 	}
   }
   
   /**
-   * Make intermidiate calculations of given operators and rewrite list. One of operators and two 
-   * operands are replaced with result.
-   * Params firstOper and secOper - operators for calculations.
-   * Returns nothing.
+   * Rewrite list by replacing operator and two operands with result
+   *
+   * @param firstOper - one operator need for calculation.
+   * @param secOper - other operator need for calculation.
+   * @param exprArr - list with operands and operators.
    */
   public void reWriteList(String firstOper, String secOper, List<String> exprArr) {
-	int i = 0;
+	int position = 0;
 
-	while (i < exprArr.size()) {
-	  if ((exprArr.get(i)).equals(firstOper) || (exprArr.get(i)).equals(secOper)) {
-		exprArr.set(i - 1, calcOneOperat(exprArr.get(i - 1), exprArr.remove(i + 1), exprArr.remove(i)));
-		i -= 1;
+	while (position < exprArr.size()) {
+	  String currSymb = exprArr.get(position);
+	  
+	  if (currSymb.equals(firstOper) || currSymb.equals(secOper)) {
+		String firstNum = exprArr.get(position - 1);
+		String secondNum = exprArr.remove(position + 1);
+		String operator = exprArr.remove(position);
+		
+		exprArr.set(position - 1, calcOneOperat(firstNum, secondNum, operator));
+		position -= 1;
 	  }
-	  i++;
-	}
-	
-	if (exprArr.size() == 1) {
-      System.out.println(exprArr.get(0));
+	  position++;
 	}
   }
   
   /**
-   * Make one operation. 
-   * Params f_num and s_num - are operands.
+   * Calculate one operation. 
+   *
+   * @param fNum - first operand. 
+   * @param sNum - second operand.
    * @param oper - operator.
    * @return result of calculation.
    */
-  public String calcOneOperat(String f_num, String s_num, String oper) {
-	double first_num = Double.parseDouble(f_num);
-	double second_num = Double.parseDouble(s_num);
+  public String calcOneOperat(String fNum, String sNum, String oper) {
+	double firstNum = Double.parseDouble(fNum);
+	double secondNum = Double.parseDouble(sNum);
 	double result = 0;
 	
 	switch (oper) {
-      case SUM:
-	    result = first_num + second_num;
+      case ADDITION:
+	    result = firstNum + secondNum;
 		break;
-	  case DIF:
-	    result = first_num - second_num;
+	  case SUBTRACTION:
+	    result = firstNum - secondNum;
 		break;
-	  case DEV:
-	    result = first_num / second_num;
+	  case DIVISION:
+	    result = firstNum / secondNum;
 		break;
-	  case PROD:
-	    result = first_num * second_num;
+	  case MULTIPLICATION:
+	    result = firstNum * secondNum;
 		break;
+	  default:
 	}
 	return String.valueOf(result);
   }
-  
 }

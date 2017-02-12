@@ -1,82 +1,87 @@
 package task_Dev_2.calculator;
 
 import java.util.*;
-import java.math.*;
 
 /**
  * Class for checking and processing strings.
  */
-
 class StringProcess {
-  private static final String DEV = "/";
-  private static final String PROD = "*";
-  private static final String DIF = "-";
-  private static final String SUM = "+";
+  private static final String DIVISION = "/";
+  private static final String MULTIPLICATION = "*";
+  private static final String SUBTRACTION = "-";
+  private static final String ADDITION = "+";
+  private static final String EXP = "e";
+  private static final String BOUNDS_ERROR_MSG = "Look for bounds of your expression!";
+  private static final String USING_EXP_ERROR_MSG = "There is an operator after \'e\'";
+  private static final String FOLLOWING_OPERATORS_MSG = "Two operators follow each other";
+  private static final String NOT_ENOUGH_INFORM_MSG = "There is not enough information!";
   private static final int MIN_SIZE = 3;
   
   /**
+   * Converts string expression to list of operators and operands.
+   *
    * @param expr - input expression, which need to be processed.
    * @return ready for calculations list.
    */
   public List fromStrToList(String expr) {
 	List<String> expressionArray = new ArrayList<String>();
 	
-	if (expr.length() == 0) {
-	  System.out.println("\n Be more attentive! There is not enough information!");
-	  System.exit(0);
-	}	
-	
-	checkBounds(expr, SUM, DIF, PROD, DEV);
-	makeList(expressionArray, expr, SUM, PROD, DIF, DEV);
-	
-	if (expressionArray.size() < MIN_SIZE) {
-	  System.out.println("\n Be more attentive! There is not enough information!");
+	try {
+	  checkBounds(expr, ADDITION, SUBTRACTION, MULTIPLICATION, DIVISION);
+	  makeList(expressionArray, expr, ADDITION, MULTIPLICATION, SUBTRACTION, DIVISION);
+	  
+	  if (expressionArray.size() < MIN_SIZE) {
+	    throw new ArrayIndexOutOfBoundsException();
+	  }
+	} catch (ArrayIndexOutOfBoundsException ex) {
+	  System.out.println(NOT_ENOUGH_INFORM_MSG);
 	  System.exit(0);
 	}
+	
 	System.out.println(expressionArray);
 	return expressionArray;
   }
   
   /**
-   * Make dividing of given string into elementary strings - operands or operators.
-   * Params sum, prod, dif, dev - operators to find.
+   * Divide string into elementary strings - operands or operators.
+   *
+   * @param addition - operator "+" need to find in expression.
+   * @param multiplication - operator "*" need to find in expression.
+   * @param subtraction - operator "-" need to find in expression.
+   * @param division - operator "/" need to find in expression.
    * @param exprArr - list of new elementary strings.
    * @param expr - source string.
    */
-  public void makeList(List<String> exprArr, String expr, String sum, String prod, String dif, 
-      String dev) {
-	String exp = "e";
+  public void makeList(List<String> exprArr, String expr, String addition, String multiplication, 
+      String subtraction, String division) {
     expr = expr.toLowerCase();
-	String curr;
+	String current;
 	String next;
 	int mark = 0;
 	
 	for (int i = 0; i < expr.length(); i++) {
-	  curr = expr.substring(i, i + 1);
+	  current = expr.substring(i, i + 1);
 	  
-	  if (curr.equals(prod) || curr.equals(dev) || curr.equals(sum) || 
-	      curr.equals(dif)) {
-		/**
-	     * Skip first "+" and "-" and add them to first number
-	     */
-		if (i == 0 && (curr.equals(sum) || curr.equals(dif))) {
+	  if (current.equals(multiplication) || current.equals(division) || current.equals(addition) ||
+	      current.equals(subtraction)) {
+        next = expr.substring(i + 1, i + 2);
+		
+		// Skip first in the string operators "+" and "-" and add them to first number.
+		if (i == 0 && (current.equals(addition) || current.equals(subtraction))) {
 		  continue;
 		}
 		
-		next = expr.substring(i + 1, i + 2);
-		/**
-	     * Process case, when two operators follow each other
-	     */
-		if (next.equals(sum) || next.equals(dif)) {
+	    // Process case, when two operators follow each other.
+		if (next.equals(addition) || next.equals(subtraction)) {
 			exprArr.add(expr.substring(mark, i));
 	        exprArr.add(expr.substring(i, i + 1));
 	        mark = i + 1;
 			i++;
 			continue;
-		  } else if (next.equals(prod) || next.equals(dev)) {
-			System.out.println("Sorry! Incorrect input.");
-			System.exit(0);
-		  }
+		} else if (next.equals(multiplication) || next.equals(division)) {
+		  System.out.println(FOLLOWING_OPERATORS_MSG);
+		  System.exit(0);
+		}
 		
 	    exprArr.add(expr.substring(mark, i));
 	    exprArr.add(expr.substring(i, i + 1));
@@ -87,14 +92,14 @@ class StringProcess {
 	    exprArr.add(expr.substring(mark, i + 1));
 	  }
 	  
-	  if (curr.equals(exp)) {
+	  if (current.equals(EXP)) {
 		next = expr.substring(i + 1, i + 2);
-		if (next.equals(sum) || next.equals(dif)) {
+		if (next.equals(addition) || next.equals(subtraction)) {
 		  i++;
 		  continue;
 		} 
-		else if (next.equals(prod) || next.equals(dev)) {
-		  System.out.println("Sorry! Incorrect input.");
+		else if (next.equals(multiplication) || next.equals(division)) {
+		  System.out.println(USING_EXP_ERROR_MSG);
 		  System.exit(0);
 		}
 	  }
@@ -102,14 +107,19 @@ class StringProcess {
   }
   
   /**
-   * Method find operators on bounds of string. If it find illegal operators on bounds, it exit.
-   * Params SUM, DIF, PROD, DEV - operators to find.
+   * Find illegal operators on bounds of string. If it find them, it exit.
+   *
+   * @param addition - operator "+" which need to find.
+   * @param subtraction - operator "-" which need to find.
+   * @param multiplication - operator "*" which need to find.
+   * @param division - operator "/" which need to find.
    * @param str - list of new elementary strings.
    */
-  public void checkBounds(String str, String SUM, String DIF, String PROD, String DEV) {
+  public void checkBounds(String str, String addition, String subtraction, String multiplication, 
+      String division) {
 	boolean isCorrect = true;
 	char[] expr = str.toCharArray();
-	char[] oper = (SUM + DIF + PROD + DEV).toCharArray();
+	char[] oper = (addition + subtraction + multiplication + division).toCharArray();
 	
 	for (int i = 0; i < oper.length; i++) {
 	  if (expr[expr.length - 1] == oper[i]) {
@@ -120,7 +130,7 @@ class StringProcess {
 	  }
 	}
 	if (!isCorrect) {
-	  System.out.println("Look for bounds of your expression!");
+	  System.out.println(BOUNDS_ERROR_MSG);
 	  System.exit(0);
 	}
   }  

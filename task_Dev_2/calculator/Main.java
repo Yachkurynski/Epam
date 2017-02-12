@@ -8,8 +8,9 @@ import java.util.*;
 class Main {
   
   /**
-   * Read and process expression from CL or console.
-   * @param args - arguments of CL. If there is no arguments from CL, than program wait expression from console.
+   * Read and process expression from CL or console, if there is no arguments from CL.
+   *
+   * @param args - arguments of CL.
    */
   public static void main(String[] args) {
 	String str = "";
