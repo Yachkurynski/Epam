@@ -24,114 +24,112 @@ class StringProcess {
    * @return ready for calculations list.
    */
   public List fromStrToList(String expr) {
-	List<String> expressionArray = new ArrayList<String>();
-	
-	try {
-	  checkBounds(expr, ADDITION, SUBTRACTION, MULTIPLICATION, DIVISION);
-	  makeList(expressionArray, expr, ADDITION, MULTIPLICATION, SUBTRACTION, DIVISION);
-	  
-	  if (expressionArray.size() < MIN_SIZE) {
-	    throw new ArrayIndexOutOfBoundsException();
-	  }
-	} catch (ArrayIndexOutOfBoundsException ex) {
-	  System.out.println(NOT_ENOUGH_INFORM_MSG);
-	  System.exit(0);
-	}
-	
-	System.out.println(expressionArray);
-	return expressionArray;
+    List<String> expressionArray = new ArrayList<String>();
+
+    try {
+      checkBounds(expr);
+      makeList(expressionArray, expr);
+      
+      if (expressionArray.size() < MIN_SIZE) {
+        throw new ArrayIndexOutOfBoundsException();
+      }
+    } catch (ArrayIndexOutOfBoundsException ex) {
+      System.out.println(NOT_ENOUGH_INFORM_MSG);
+      System.exit(0);
+    }
+
+    System.out.println(expressionArray);
+    return expressionArray;
   }
   
   /**
    * Divide string into elementary strings - operands or operators.
    *
-   * @param addition - operator "+" need to find in expression.
-   * @param multiplication - operator "*" need to find in expression.
-   * @param subtraction - operator "-" need to find in expression.
-   * @param division - operator "/" need to find in expression.
    * @param exprArr - list of new elementary strings.
    * @param expr - source string.
    */
-  public void makeList(List<String> exprArr, String expr, String addition, String multiplication, 
-      String subtraction, String division) {
+  public void makeList(List<String> exprArr, String expr) {
     expr = expr.toLowerCase();
-	String current;
-	String next;
-	int mark = 0;
-	
-	for (int i = 0; i < expr.length(); i++) {
-	  current = expr.substring(i, i + 1);
+    String current;
+    String next;
+    int mark = 0;
+    
+	// TODO: Decompose it better!
+    for (int i = 0; i < expr.length(); i++) {
+      current = expr.substring(i, i + 1);
 	  
-	  if (current.equals(multiplication) || current.equals(division) || current.equals(addition) ||
-	      current.equals(subtraction)) {
+      if (current.equals(MULTIPLICATION) || current.equals(DIVISION) || current.equals(ADDITION) ||
+          current.equals(SUBTRACTION)) {
         next = expr.substring(i + 1, i + 2);
-		
-		// Skip first in the string operators "+" and "-" and add them to first number.
-		if (i == 0 && (current.equals(addition) || current.equals(subtraction))) {
-		  continue;
-		}
-		
-	    // Process case, when two operators follow each other.
-		if (next.equals(addition) || next.equals(subtraction)) {
-			exprArr.add(expr.substring(mark, i));
-	        exprArr.add(expr.substring(i, i + 1));
-	        mark = i + 1;
-			i++;
-			continue;
-		} else if (next.equals(multiplication) || next.equals(division)) {
-		  System.out.println(FOLLOWING_OPERATORS_MSG);
-		  System.exit(0);
-		}
-		
-	    exprArr.add(expr.substring(mark, i));
-	    exprArr.add(expr.substring(i, i + 1));
-	    mark = i + 1;
-	  }
-	  
-	  if (i == expr.length() - 1) {
-	    exprArr.add(expr.substring(mark, i + 1));
-	  }
-	  
-	  if (current.equals(EXP)) {
-		next = expr.substring(i + 1, i + 2);
-		if (next.equals(addition) || next.equals(subtraction)) {
-		  i++;
-		  continue;
-		} 
-		else if (next.equals(multiplication) || next.equals(division)) {
-		  System.out.println(USING_EXP_ERROR_MSG);
-		  System.exit(0);
-		}
-	  }
-	}
+
+        // Skip first in the string operators "+" and "-" and add them to first number.
+        if (i == 0 && (current.equals(ADDITION) || current.equals(SUBTRACTION))) {
+          continue;
+        }
+
+        // Process case, when two operators follow each other.
+        if (next.equals(ADDITION) || next.equals(SUBTRACTION)) {
+            addToList(exprArr, expr, i, mark);
+			mark = i + 1;
+            i++;
+            continue;
+        } else if (next.equals(MULTIPLICATION) || next.equals(DIVISION)) {
+          System.out.println(FOLLOWING_OPERATORS_MSG);
+          System.exit(0);
+        }
+        addToList(exprArr, expr, i, mark);
+		mark = i + 1;
+      }
+      if (i == expr.length() - 1) {
+        exprArr.add(expr.substring(mark, i + 1));
+      }
+      if (current.equals(EXP)) {
+        next = expr.substring(i + 1, i + 2);
+        if (next.equals(ADDITION) || next.equals(SUBTRACTION)) {
+          i++;
+          continue;
+        } else if (next.equals(MULTIPLICATION) || next.equals(DIVISION)) {
+          System.out.println(USING_EXP_ERROR_MSG);
+          System.exit(0);
+        }
+      }
+    }
+  }
+
+  /**
+   * Adds to list current number and operator after it.
+   *
+   * @param exprArr - list.
+   * @param expr - string expression.
+   * @param iter - current symbol's number.
+   * @param mark - number's beginning.
+   */  
+  public void addToList(List<String> exprArr, String expr, int iter, int mark) {
+    exprArr.add(expr.substring(mark, iter));
+    exprArr.add(expr.substring(iter, iter + 1));
   }
   
   /**
    * Find illegal operators on bounds of string. If it find them, it exit.
    *
-   * @param addition - operator "+" which need to find.
-   * @param subtraction - operator "-" which need to find.
-   * @param multiplication - operator "*" which need to find.
-   * @param division - operator "/" which need to find.
    * @param str - list of new elementary strings.
    */
-  public void checkBounds(String str, String addition, String subtraction, String multiplication, 
-      String division) {
-	boolean isCorrect = true;
-	char[] expr = str.toCharArray();
-	char[] oper = (addition + subtraction + multiplication + division).toCharArray();
-	
-	for (int i = 0; i < oper.length; i++) {
-	  if (expr[expr.length - 1] == oper[i]) {
-		isCorrect = false;
-	  }
-	  if (i > 1 && expr[0] == oper[i]) {
-		isCorrect = false;
-	  }
-	}
-	if (!isCorrect) {
-	  System.out.println(BOUNDS_ERROR_MSG);
-	  System.exit(0);
-	}
+  public void checkBounds(String str) {
+    boolean isCorrect = true;
+    char[] expr = str.toCharArray();
+    char[] oper = (ADDITION + SUBTRACTION + MULTIPLICATION + DIVISION).toCharArray();
+
+    for (int i = 0; i < oper.length; i++) {
+      if (expr[expr.length - 1] == oper[i]) {
+        isCorrect = false;
+      }
+      if (i > 1 && expr[0] == oper[i]) {
+        isCorrect = false;
+      }
+    }
+    if (!isCorrect) {
+      System.out.println(BOUNDS_ERROR_MSG);
+      System.exit(0);
+    }
   }  
 }
