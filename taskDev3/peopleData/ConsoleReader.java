@@ -23,6 +23,10 @@ class ConsoleReader {
   private static final int SEX_NUM = 2;
   private static final int AGE_NUM = 3;
   private static final int ARRAY_SIZE = 4; // For 4 parameters: surname, name, sex, age.
+  private static final String NEED_TO_ADD_ASK = "Do you want add person? (y|n)";
+  private static final String YES_ANSWER = "y";
+  private static final String NO_ANSWER = "n";
+  private static final String ENTER_YES_OR_NO = "Please, enter only 'y' or 'n'.";
   
   /**
    * Returns a read string.
@@ -90,4 +94,31 @@ class ConsoleReader {
     }
     return needRepeat;
   }
+
+  /**
+   * Ask about need to describe new person and does it, if it's necessary.
+   * 
+   * @param people - list of people for filling.
+   * @return true if it needs to add one more person.
+   */
+  public boolean interview( List<People> people) throws IOException {
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    boolean needRepeat = true;  
+    
+    System.out.println(NEED_TO_ADD_ASK);
+    String ans = reader.readLine();
+
+    if (ans.toLowerCase().equals(YES_ANSWER)) { 
+      Builder build = new Builder();
+
+      people.add(build.buildPerson(readFromConsole()));
+    } else if (ans.toLowerCase().equals(NO_ANSWER)) {
+      if (people.size() != 0) {
+        needRepeat = false;
+      }
+    } else {
+      System.out.println(ENTER_YES_OR_NO);
+    }
+    return needRepeat;
+  }  
 }
