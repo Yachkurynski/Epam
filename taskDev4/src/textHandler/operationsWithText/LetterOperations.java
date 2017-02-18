@@ -14,34 +14,39 @@ public class LetterOperations {
    * Fills Map by letters as key and their amount as value.
    *
    * @param listTexts - list of texts.
+   * @param sequence_size - needed sequence size to calculate.
+   * @param invalidSymbols - list of invalid symbols.
    * @return Map with letters and their amount.
    */
-  public Map<String, Integer> fillMapByLetters(List<String> listTexts, int sequence_size) {
-    Map<String, Integer> twoLettersMap = new HashMap<>();
+  public Map<String, Integer> fillMapByLetters(List<String> listTexts, int sequence_size,
+      List<String> invalidSymbols) {
+    Map<String, Integer> sequenceLettersMap = new HashMap<>();
 
     for (String text : listTexts) {
       for (int i = sequence_size - 1; i < text.length(); i++) {
         if (isLetters(text.substring(i - (sequence_size - 1), i + 1))) {
-          String twoLetters = text.substring(i - (sequence_size - 1), i + 1);
-          if (twoLettersMap.containsKey(twoLetters)) {
-            twoLettersMap.put(twoLetters, twoLettersMap.get(twoLetters) + 1);
+          String sequenceOfLetters = text.substring(i - (sequence_size - 1), i + 1);
+          if (sequenceLettersMap.containsKey(sequenceOfLetters)) {
+            sequenceLettersMap.put(sequenceOfLetters, sequenceLettersMap.get(sequenceOfLetters) + 1);
           } else {
-            twoLettersMap.put(twoLetters, 1);
+            sequenceLettersMap.put(sequenceOfLetters, 1);
           }
         }
       }
     }
-    twoLettersMap.put(TOTAL_KEY, getTotalSequences(listTexts, sequence_size));
-    return twoLettersMap;
+    sequenceLettersMap.put(TOTAL_KEY, getTotalSequences(listTexts, sequence_size, invalidSymbols));
+    return sequenceLettersMap;
   }
 
   /**
    * Calculate total amount of letter's sequences.
    *
    * @param listTexts - list of texts.
+   * @param invalidSymbols - list of invalid symbols.
    * @return total amount of letter's sequences.
    */
-  public int getTotalSequences(List<String> listTexts, int sequence_size) {
+  public int getTotalSequences(List<String> listTexts, int sequence_size,
+      List<String> invalidSymbols) {
     int totalNumbOfSequences = 0;
 
     for (String text : listTexts) {
@@ -49,14 +54,16 @@ public class LetterOperations {
       int wordBeginFlag = 0;
 
       for (int i = 0; i < text.length(); i++) {
-        String currSymbol = text.substring(i, i + 1);
-        if (currSymbol.equals(" ")) {
-          String lastWord = text.substring(wordBeginFlag, i);
-          numbOfSequences += calcNumbOfSequences(lastWord, sequence_size);
-          wordBeginFlag = i + 1;
-        } else if(i == text.length() - 1) {
-          String lastWord = text.substring(wordBeginFlag, i + 1);
-          numbOfSequences += calcNumbOfSequences(lastWord, sequence_size);
+        for (String symbol : invalidSymbols) {
+          String currSymbol = text.substring(i, i + 1);
+          if (currSymbol.equals(symbol)) {
+            String lastWord = text.substring(wordBeginFlag, i);
+            numbOfSequences += calcNumbOfSequences(lastWord, sequence_size);
+            wordBeginFlag = i + 1;
+          } else if (i == text.length() - 1) {
+            String lastWord = text.substring(wordBeginFlag, i + 1);
+            numbOfSequences += calcNumbOfSequences(lastWord, sequence_size);
+          }
         }
       }
       totalNumbOfSequences += numbOfSequences;

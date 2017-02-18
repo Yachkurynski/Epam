@@ -1,13 +1,13 @@
 package textHandler;
 
 import java.io.*;
-import java.util.*;
 
 /**
  * Works with console.
  */
 public class ConsoleReader {
-
+  private static final String UNDERLINE_SYMB = "_";
+  private static final String NOTHING_SYMB = "";
   private static final String ENTER_TEXT_ASK = "Enter text: ";
 
   /**
@@ -19,7 +19,7 @@ public class ConsoleReader {
   public String read() throws IOException {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     System.out.println(ENTER_TEXT_ASK);
-    return reader.readLine();
+    return reader.readLine().replaceAll(UNDERLINE_SYMB, NOTHING_SYMB);
   }
 
   /**
@@ -33,8 +33,8 @@ public class ConsoleReader {
     System.out.println(ENTER_TEXT_ASK);
 
     boolean repeat = true;
+    boolean correctAnswer;
 
-    boolean correctAnswer = true;
     do {
       System.out.println("Do you want enter one more text? (yes/no)");
       String answer = reader.readLine();

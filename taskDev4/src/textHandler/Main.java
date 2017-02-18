@@ -21,6 +21,7 @@ public class Main {
     ConsoleReader consoleReader = new ConsoleReader();
     List<String> listOfTexts = new ArrayList<>();
     PrintResults printer = new PrintResults();
+    InvalidSymbols invalidSymbols = new InvalidSymbols();
     int iter = 0;
 
     try {
@@ -29,9 +30,10 @@ public class Main {
         LetterOperations findLetters = new LetterOperations();
 
         listOfTexts.add(consoleReader.read());
-
-        printer.print(findWords.getNumberOfSpecialWordsInList(NEEDED_WORD_SIZE, listOfTexts));
-        printer.print(findLetters.fillMapByLetters(listOfTexts, NEEDED_SEQUENCE_SIZE));
+        printer.print(findWords.getNumberOfSpecialWordsInList(NEEDED_WORD_SIZE, listOfTexts,
+            invalidSymbols.getInvalidSymbols()));
+        printer.print(findLetters.fillMapByLetters(listOfTexts, NEEDED_SEQUENCE_SIZE,
+            invalidSymbols.getInvalidSymbols()));
       } while (++iter < MIN_TEXT_NUMBER || consoleReader.needRepeat());
     } catch (IOException ex) {
       System.out.println(ex.getLocalizedMessage());
