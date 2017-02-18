@@ -5,10 +5,7 @@ import java.util.*;
  * Describes invalid symbols for calculations.
  */
 public class InvalidSymbols {
-  private static final char SPACE_SYMBOL = 32;
-  private static final char A_SYMBOL = 65;
-  private static final char SLASH_SYMBOL = 47;
-  private static final char DOTS_SYMBOL = 58;
+  private static final String PUNCTUATIONS = ",.:;\'\"\\-/<> ";
   private List<String> invalidSymbols;
 
   /**
@@ -16,13 +13,10 @@ public class InvalidSymbols {
    */
   public InvalidSymbols() {
     List<String> invalidSymbs = new ArrayList<>();
+    char[] punctuations = PUNCTUATIONS.toCharArray();
 
-    for (char i = SPACE_SYMBOL; i < A_SYMBOL; i++) {
-      if(i > SLASH_SYMBOL && i < DOTS_SYMBOL) {
-        continue;
-      } else {
-        invalidSymbs.add(String.valueOf(i));
-      }
+    for (char mark : punctuations) {
+      invalidSymbs.add(String.valueOf(mark));
     }
     this.invalidSymbols = invalidSymbs;
   }
