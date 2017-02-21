@@ -8,6 +8,7 @@ import recruitment.employees.*;
  */
 public class EmploymentByStaff extends Employment {
   private static final String ENTER_VALUE_MSG = "Enter productivity: ";
+  private static final String UNUSELESS_QUALIFICATION = "Junior";
 
   /**
    * Performs employment with minimal number of employees higher than Junior for fixed productivity.
@@ -21,7 +22,7 @@ public class EmploymentByStaff extends Employment {
     List<Employee> bufferedTeam = new ArrayList<>();
 
     for (Employee employee : employees) {
-      if (employee.getQualification().equals("Junior")) {
+      if (employee.getQualification().equals(UNUSELESS_QUALIFICATION)) {
         continue;
       } else {
         bufferedTeam.add(employee);
@@ -38,8 +39,6 @@ public class EmploymentByStaff extends Employment {
         team.add(employee);
       }
     }
-
-
     return team;
   }
 

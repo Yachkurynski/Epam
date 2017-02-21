@@ -6,6 +6,14 @@ import java.io.*;
  * Read data from console.
  */
 public class ConsoleReader {
+  private static final String FIRST_WAY_OF_RECRUITMENT =
+      "1. Maximal productivity for this amount of money.\n";
+  private static final String SECOND_WAY_OF_RECRUITMENT =
+      "2. Minimal cost for fixed productivity.\n";
+  private static final String THIRD_WAY_OF_RECRUITMENT =
+      "3. Minimal number of employees higher than Junior for fixed productivity.";
+  private static final String INCORRECT_ENTER_MSG = "Please, enter only 1, 2 or 3.";
+  private static final String CHOOSE_ASK = "Choose the way of recruitment:\n";
 
   /**
    * Ask user to choose the way of recruitment.
@@ -18,16 +26,13 @@ public class ConsoleReader {
     int answer = 0;
 
     do {
-      System.out.println("Choose: ");
-      System.out.println("1. Maximal productivity for this amount of money.");
-      System.out.println("2. Minimal cost for fixed productivity.");
-      System.out
-          .println("3. Minimal number of employees higher than Junior for fixed productivity");
+      System.out.println(CHOOSE_ASK + FIRST_WAY_OF_RECRUITMENT + SECOND_WAY_OF_RECRUITMENT
+          + THIRD_WAY_OF_RECRUITMENT);
 
       try {
         answer = Integer.parseInt(reader.readLine());
       } catch (NumberFormatException ex) {
-        System.out.println("Please, enter only 1, 2 or 3.");
+        System.out.println(INCORRECT_ENTER_MSG);
         continue;
       } catch (IOException ex) {
         System.out.println(ex.getLocalizedMessage());

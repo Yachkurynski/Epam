@@ -8,20 +8,29 @@ import recruitment.employment.*;
  * Performs recruitment.
  */
 public class Recruitment {
-
   /**
    * Performs recruitment by way which depends on entered parameter.
    *
    * @param number entered parameter
    * @return team match parameter
    */
-  public List<Employee> recruit(int number) {
+  public Map<String, Integer> recruit(int number) {
     ConsoleReader reader = new ConsoleReader();
     List<Employment> employments = createListOfEmployments();
     List<Employee> employees = createListOfEmployees();
 
-    List<Employee> team = employments.get(number - 1)
+    List<Employee> bufferedTeam = employments.get(number - 1)
         .employ(reader.readValue(employments.get(number - 1).getMessage()), employees);
+
+    Map<String, Integer> team = new HashMap<>();
+
+    for (Employee person : bufferedTeam) {
+      if (team.containsKey(person.getQualification())) {
+        team.put(person.getQualification(), team.get(person.getQualification()) + 1);
+      } else {
+        team.put(person.getQualification(), 1);
+      }
+    }
     return team;
   }
 
@@ -67,7 +76,7 @@ public class Recruitment {
 
     for (int i = 0; i < employees.size(); i++) {
       for (int j = employees.size() - 1; j > i; j--) {
-        if(getPerformance(i, employees) > getPerformance(j, employees)) {
+        if (getPerformance(i, employees) > getPerformance(j, employees)) {
           buffer = employees.remove(j);
           employees.add(j - 1, employees.remove(i));
           employees.add(i, buffer);
@@ -85,7 +94,7 @@ public class Recruitment {
    * @return ratio salary/productivity.
    */
   public double getPerformance(int number, List<Employee> employees) {
-    return (double)employees.get(number).getSalary()/
-        (double)employees.get(number).getProductivity();
+    return (double) employees.get(number).getSalary() /
+        (double) employees.get(number).getSalary();
   }
 }
