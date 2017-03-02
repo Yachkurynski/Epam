@@ -1,7 +1,5 @@
 package matrixMultiplier;
 
-import java.io.IOException;
-
 /**
  * Fills the matrix.
  */
@@ -15,7 +13,7 @@ public class MatrixFiller {
    *
    * @return filled by double values matrix.
    */
-  public double[][] fillMatrix() throws IOException {
+  public double[][] fillMatrix() {
     ConsoleReader reader = new ConsoleReader();
 
     System.out.println(ENTER_LINES_ASK);
