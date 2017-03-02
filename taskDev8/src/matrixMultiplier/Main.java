@@ -4,7 +4,6 @@ package matrixMultiplier;
  * Multiplies matrices.
  */
 public class Main {
-
   private static final String MULTIPLY_ERROR_MSG = "Can't multiply matrices.";
 
   /**
