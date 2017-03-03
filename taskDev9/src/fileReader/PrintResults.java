@@ -4,11 +4,10 @@ package fileReader;
  * Prints result of program execution.
  */
 public class PrintResults {
-  private static final String EMPTY_ARRAY_MSG = "There is no values.";
+  private static final String EMPTY_ARRAY_MSG = "There is nothing matches your parameters";;
 
   /**
    * Prints given array.
-   *
    * @param values array need to print.
    */
   public void printArray(String[] values) {

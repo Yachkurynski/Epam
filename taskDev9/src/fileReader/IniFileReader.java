@@ -26,7 +26,7 @@ public class IniFileReader {
     String value = "";
 
     try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-      value = getNeededValue(reader, section, key);
+      value = getNeededValueFromFile(reader, section, key);
     } catch (FileNotFoundException ex) {
       System.out.println(ex.getLocalizedMessage());
     } catch (IOException ex) {
@@ -43,7 +43,7 @@ public class IniFileReader {
    * @param key name of key by which needed value is stored.
    * @return needed value.
    */
-  private String getNeededValue(BufferedReader reader, String section, String key)
+  private String getNeededValueFromFile(BufferedReader reader, String section, String key)
       throws IOException {
     String line;
     String value = "";

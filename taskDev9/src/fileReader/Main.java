@@ -18,11 +18,14 @@ public class Main {
       ConsoleReader consoleReader = new ConsoleReader();
       PrintResults printer = new PrintResults();
 
-      String section = consoleReader.readFromConsole(SECTION_WORD);
-      String key = consoleReader.readFromConsole(KEY_WORD);
-      String[] values = fileReader.readFromFile(args[0], section, key);
-      printer.printArray(values);
-
+      try {
+        String section = consoleReader.readFromConsole(SECTION_WORD);
+        String key = consoleReader.readFromConsole(KEY_WORD);
+        String[] values = fileReader.readFromFile(args[0], section, key);
+        printer.printArray(values);
+      } catch (NullPointerException ex) {
+        System.out.println(ex.getMessage());
+      }
     } else {
       System.out.println(INCORRECT_ARGUMENT_ERROR_MSG);
     }
