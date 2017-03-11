@@ -1,5 +1,8 @@
 package calendar;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 /**
  * Prints current time according to entered format.
  */
@@ -12,10 +15,15 @@ public class Main {
    */
   public static void main(String[] args) {
     ConsoleReader reader = new ConsoleReader();
-    CurrentTime currentTime = new CurrentTime();
+    DateBuilder date = new DateBuilder();
+    Calendar calendar = new GregorianCalendar();
 
-    String[] format = reader.readFromConsole();
-    String curTime = currentTime.getCurrentTime(format);
-    System.out.println(curTime);
+    String[] formats = reader.readFromConsole();
+
+    for (String format : formats) {
+      String currDate = date.getCurrentTime().getFormatedDate(format, calendar);
+      System.out.print(currDate + " ");
+    }
+
   }
 }
