@@ -15,15 +15,15 @@ public class Main {
    */
   public static void main(String[] args) {
     ConsoleReader reader = new ConsoleReader();
-    DateBuilder date = new DateBuilder();
+    DateGetter date = new DateGetter();
     Calendar calendar = new GregorianCalendar();
-
-    String[] formats = reader.readFromConsole();
-
-    for (String format : formats) {
-      String currDate = date.getCurrentTime().getFormatedDate(format, calendar);
-      System.out.print(currDate + " ");
+    DateBuilder builder = new DateBuilder();
+    try {
+      String formats = reader.readFromConsole();
+      String currDate = builder.buildCurrentDate(formats, date.getCurrentTime(), calendar);
+      System.out.print(currDate);
+    } catch (IllegalArgumentException ex) {
+      System.out.println(ex.getLocalizedMessage());
     }
-
   }
 }
