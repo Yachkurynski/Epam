@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for date format "ddd".
  */
 public class DDDDayOfTheWeekTest {
   DDDDayOfTheWeek dayOfTheWeek;
@@ -18,6 +18,7 @@ public class DDDDayOfTheWeekTest {
   @Before
   public void setUp() throws Exception {
     dayOfTheWeek = new DDDDayOfTheWeek();
+
     calendar = Calendar.getInstance();
     calendar.set(2017, 3, 12, 23, 7, 30);
     rightFormat = "ddd";

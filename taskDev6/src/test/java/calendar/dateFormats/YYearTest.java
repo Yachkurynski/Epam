@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for date format "y".
  */
 public class YYearTest {
   Calendar calendar;
@@ -17,11 +17,12 @@ public class YYearTest {
 
   @Before
   public void setUp() throws Exception {
+    year = new YYear();
+
     calendar = Calendar.getInstance();
     calendar.set(2009, 2, 12, 21, 7, 30);
     rightFormat = "y";
     wrongFormat = "aa";
-    year = new YYear();
   }
 
   @Test

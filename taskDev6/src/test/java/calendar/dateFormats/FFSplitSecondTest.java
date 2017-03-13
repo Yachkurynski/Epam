@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for date format "ff".
  */
 public class FFSplitSecondTest {
   Calendar calendar;
@@ -17,11 +17,12 @@ public class FFSplitSecondTest {
 
   @Before
   public void setUp() throws Exception {
+    millis = new FFSplitSecond();
+
     calendar = Calendar.getInstance();
     calendar.set(Calendar.MILLISECOND, 300);
     rightFormat = "ff";
     wrongFormat = "aa";
-    millis = new FFSplitSecond();
   }
 
   @Test
@@ -35,5 +36,4 @@ public class FFSplitSecondTest {
     String actual = millis.getFormatedDate(wrongFormat, calendar);
     assertEquals(wrongFormat, actual);
   }
-
 }

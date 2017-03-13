@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for date format "zz".
  */
 public class ZZTimeOffsetTest {
   Calendar calendar;
@@ -18,11 +18,12 @@ public class ZZTimeOffsetTest {
 
   @Before
   public void setUp() throws Exception {
+    offset = new ZZTimeOffset();
+
     calendar = Calendar.getInstance();
     calendar.setTimeZone(TimeZone.getTimeZone("Europe/Minsk"));
     rightFormat = "zz";
     wrongFormat = "aa";
-    offset = new ZZTimeOffset();
   }
 
   @Test

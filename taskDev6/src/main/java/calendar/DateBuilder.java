@@ -10,6 +10,7 @@ public class DateBuilder {
   private static final String COLON = ":";
   private static final String SLASH = "/";
   private static final String SPACE = " ";
+  private static final String DOT = ".";
 
   /**
    * Builds current date according to given format.
@@ -48,6 +49,6 @@ public class DateBuilder {
    */
   private boolean isOperator(String currentSymbol) {
     return currentSymbol.equals(SLASH) || currentSymbol.equals(COLON) ||
-        currentSymbol.equals(SPACE);
+        currentSymbol.equals(SPACE) || currentSymbol.equals(DOT);
   }
 }

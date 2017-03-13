@@ -7,9 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for date format "fff".
  */
 public class FFFSplitSecondTest {
+
   Calendar calendar;
   String rightFormat;
   String wrongFormat;
@@ -17,11 +18,12 @@ public class FFFSplitSecondTest {
 
   @Before
   public void setUp() throws Exception {
+    millis = new FFFSplitSecond();
+
     calendar = Calendar.getInstance();
     calendar.set(Calendar.MILLISECOND, 300);
     rightFormat = "fff";
     wrongFormat = "aa";
-    millis = new FFFSplitSecond();
   }
 
   @Test
@@ -31,9 +33,8 @@ public class FFFSplitSecondTest {
   }
 
   @Test
-    public void testNegativeGetFormatedDate() throws Exception {
-      String actual = millis.getFormatedDate(wrongFormat, calendar);
-      assertEquals(wrongFormat, actual);
-    }
-
+  public void testNegativeGetFormatedDate() throws Exception {
+    String actual = millis.getFormatedDate(wrongFormat, calendar);
+    assertEquals(wrongFormat, actual);
+  }
 }

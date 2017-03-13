@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for date format "h".
  */
 public class H12HoursTest {
   H12Hours hour;
@@ -17,11 +17,12 @@ public class H12HoursTest {
 
   @Before
   public void setUp() throws Exception {
+    hour = new H12Hours();
+
     calendar = Calendar.getInstance();
     calendar.set(2017, 3, 12, 23, 7, 30);
     rightFormat = "h";
     wrongFormat = "aa";
-    hour = new H12Hours();
   }
 
   @Test

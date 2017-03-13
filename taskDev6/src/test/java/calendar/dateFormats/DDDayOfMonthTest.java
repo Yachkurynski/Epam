@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for date format "dd".
  */
 public class DDDayOfMonthTest {
   DDDayOfMonth dayOfMonth;
@@ -18,6 +18,7 @@ public class DDDayOfMonthTest {
   @Before
   public void setUp() throws Exception {
     dayOfMonth = new DDDayOfMonth();
+
     calendar = Calendar.getInstance();
     calendar.set(2017, 3, 2, 23, 7, 30);
     rightFormat = "dd";

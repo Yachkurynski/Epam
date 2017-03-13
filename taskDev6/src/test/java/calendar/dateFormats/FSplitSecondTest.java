@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for date format "f".
  */
 public class FSplitSecondTest {
   Calendar calendar;
@@ -17,11 +17,12 @@ public class FSplitSecondTest {
 
   @Before
   public void setUp() throws Exception {
+    millis = new FSplitSecond();
+
     calendar = Calendar.getInstance();
     calendar.set(Calendar.MILLISECOND, 300);
     rightFormat = "f";
     wrongFormat = "aa";
-    millis = new FSplitSecond();
   }
 
   @Test

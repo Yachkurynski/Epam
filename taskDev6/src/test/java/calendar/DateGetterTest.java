@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Test for DateGetter class.
  */
 public class DateGetterTest {
   DateGetter getter;
@@ -20,5 +20,4 @@ public class DateGetterTest {
   public void getCurrentTime() throws Exception {
     assertNotNull(getter.getCurrentTime());
   }
-
 }

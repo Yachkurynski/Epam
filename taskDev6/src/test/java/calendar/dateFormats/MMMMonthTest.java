@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for date format "MMM".
  */
 public class MMMMonthTest {
   Calendar calendar;
@@ -17,11 +17,12 @@ public class MMMMonthTest {
 
   @Before
   public void setUp() throws Exception {
+    month = new MMMMonth();
+
     calendar = Calendar.getInstance();
     calendar.set(2017, 2, 12, 21, 7, 30);
     rightFormat = "MMM";
     wrongFormat = "aa";
-    month = new MMMMonth();
   }
 
   @Test

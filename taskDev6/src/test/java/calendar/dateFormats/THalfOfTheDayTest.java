@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for date format "t".
  */
 public class THalfOfTheDayTest {
   Calendar calendar;
@@ -17,11 +17,12 @@ public class THalfOfTheDayTest {
 
   @Before
   public void setUp() throws Exception {
+    halfOfTheDay = new THalfOfTheDay();
+
     calendar = Calendar.getInstance();
     calendar.set(2017, 2, 12, 21, 7, 30);
     rightFormat = "t";
     wrongFormat = "aa";
-    halfOfTheDay = new THalfOfTheDay();
   }
 
   @Test

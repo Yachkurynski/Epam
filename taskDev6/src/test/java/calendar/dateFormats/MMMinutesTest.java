@@ -17,11 +17,12 @@ public class MMMinutesTest {
 
   @Before
   public void setUp() throws Exception {
+    minute = new MMMinutes();
+
     calendar = Calendar.getInstance();
     calendar.set(2017, 3, 12, 21, 7, 30);
     rightFormat = "mm";
     wrongFormat = "aa";
-    minute = new MMMinutes();
   }
 
   @Test

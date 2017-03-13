@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for date format "ss".
  */
 public class SSSecondsTest {
   Calendar calendar;
@@ -17,11 +17,12 @@ public class SSSecondsTest {
 
   @Before
   public void setUp() throws Exception {
+    second = new SSSeconds();
+
     calendar = Calendar.getInstance();
     calendar.set(2017, 2, 12, 21, 7, 3);
     rightFormat = "ss";
     wrongFormat = "aa";
-    second = new SSSeconds();
   }
 
   @Test

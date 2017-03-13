@@ -17,7 +17,7 @@ public class MMonth extends DateFormat {
    */
   public String getFormatedDate(String format, Calendar calendar) {
     if (format.equals(this.format)) {
-      return String.valueOf(calendar.get(Calendar.MONTH));
+      return String.valueOf(calendar.get(Calendar.MONTH) + 1);
     } else if (getNextFormat() != null) {
       return getNextFormat().getFormatedDate(format, calendar);
     } else {

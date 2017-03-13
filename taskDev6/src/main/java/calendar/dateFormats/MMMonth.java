@@ -19,7 +19,7 @@ public class MMMonth extends DateFormat {
    */
   public String getFormatedDate(String format, Calendar calendar) {
     if (format.equals(this.format)) {
-      int month = calendar.get(Calendar.MONTH);
+      int month = calendar.get(Calendar.MONTH) + 1;
       return month < TWO_SYMBOLS ? ZERO + month : String.valueOf(month);
     } else if (getNextFormat() != null) {
       return getNextFormat().getFormatedDate(format, calendar);

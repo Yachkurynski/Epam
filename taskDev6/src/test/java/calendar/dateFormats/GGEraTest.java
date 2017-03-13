@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for date format "gg".
  */
 public class GGEraTest {
   GGEra era;
@@ -18,6 +18,7 @@ public class GGEraTest {
   @Before
   public void setUp() throws Exception {
     era = new GGEra();
+
     calendar = Calendar.getInstance();
     calendar.set(2017, 3, 12, 23, 7, 30);
     rightFormat = "gg";
