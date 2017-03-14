@@ -15,7 +15,7 @@ public class Checkers {
   /**
    * Enumeration of positions by y-scale.
    */
-  private enum Positions {
+  public enum Positions {
     a, b, c, d, e, f, g, h
   }
 

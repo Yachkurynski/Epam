@@ -24,6 +24,7 @@ public class ConsoleReader {
     String stringToReturn = "";
     int numberOfRepeats = 0;
     boolean needToRepeat = false;
+    boolean repeatsChecker;
 
     do {
       try {
@@ -38,7 +39,11 @@ public class ConsoleReader {
       } catch (IOException ex) {
         System.out.println(ex.getLocalizedMessage());
       }
-    } while (needToRepeat && isNeedToRepeatEnter(numberOfRepeats++));
+
+      if (!(repeatsChecker = isNeedToRepeatEnter(numberOfRepeats++))) {
+        throw new IllegalArgumentException(NUMBER_OF_REPEATS_END_MSG);
+      }
+    } while (needToRepeat && repeatsChecker);
     return stringToReturn;
   }
 
@@ -47,7 +52,7 @@ public class ConsoleReader {
    * @param numberOfRepeats given number of repeats.
    * @return true if number of repeats less than fixed value.
    */
-  public boolean isNeedToRepeatEnter(int numberOfRepeats) {
+  public boolean isNeedToRepeatEnter(int numberOfRepeats) throws IllegalArgumentException {
     if (numberOfRepeats == MAX_NUMBER_OF_REPEATS) {
       System.out.println(NUMBER_OF_REPEATS_END_MSG);
       return false;
