@@ -15,6 +15,7 @@ public class CheckersTest {
   Checkers checker4;
   Checkers checker5;
   Checkers checker6;
+  Checkers checkerInvalid;
 
   @Before
   public void setUp() throws Exception {
@@ -24,6 +25,66 @@ public class CheckersTest {
     checker4 = new Checkers("d8", "black");
     checker5 = new Checkers("b2", "white");
     checker6 = new Checkers("b2", "white");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testCreationInstanceWithNegativePosition() {
+    checkerInvalid = new Checkers("c-1", "white");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testCreationInstanceWithTwoNumbers() {
+    checkerInvalid = new Checkers("11", "white");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testCreationInstanceWithFractionNumber() {
+    checkerInvalid = new Checkers("a1.1", "");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testCreationInstanceOnWhitePosition() {
+    checkerInvalid = new Checkers("b1", "white");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testCreationInstanceOutOfChessboard() {
+    checkerInvalid = new Checkers("b10", "white");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testCreationInstanceWithInvalidPosition() {
+    checkerInvalid = new Checkers("aa", "white");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testCreationInstanceWithInverseCoordinats() {
+    checkerInvalid = new Checkers("1b", "white");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testCreationInstanceWithPositionOutOfInteger() {
+    checkerInvalid = new Checkers("b3000000000", "white");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testCreationInstanceWithInvalidColor() {
+    checkerInvalid = new Checkers("a1", "blue");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testCreationInstanceWithSpecialSymbols() {
+    checkerInvalid = new Checkers("b8", "bl@ck");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testCreationInstanceWithEmptyPosition() {
+    checkerInvalid = new Checkers("", "white");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testCreationInstanceWithEmptyColor() {
+    checkerInvalid = new Checkers("a1", "");
   }
 
   @Test

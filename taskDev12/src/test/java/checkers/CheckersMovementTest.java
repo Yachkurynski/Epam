@@ -30,6 +30,12 @@ public class CheckersMovementTest {
   }
 
   @Test
+  public void testPositiveMovementOnTheSamePosition() throws Exception {
+    int numberOfSteps = movement.move(checkerDeparture1, checkerDeparture1);
+    assertEquals(0, numberOfSteps);
+  }
+
+  @Test
   public void testPositiveMovementForWhite() throws Exception {
     int numberOfSteps = movement.move(checkerDeparture1, checkerDestination1);
     assertEquals(4, numberOfSteps);
