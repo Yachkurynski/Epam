@@ -4,6 +4,8 @@ package checkers;
  * Describes checker's movement.
  */
 public class CheckersMovement {
+  private static final String WHITE = "white";
+  private static final String WRONG_POSITION_MSG = "It's impossible! Choose other points. \n";
 
   /**
    * Performs checker's movement.
@@ -15,10 +17,10 @@ public class CheckersMovement {
    */
   public int move(Checkers ch1, Checkers ch2) throws IllegalArgumentException {
     if (!isValid(ch1, ch2)) {
-      throw new IllegalArgumentException("It's impossible! Choose other points. \n");
+      throw new IllegalArgumentException(WRONG_POSITION_MSG);
     }
 
-    if (ch1.getColor().equals("white")) {
+    if (ch1.getColor().equals(WHITE)) {
       return goWhite(ch1, ch2);
     } else {
       return goBlack(ch1, ch2);
@@ -39,7 +41,7 @@ public class CheckersMovement {
       isValid = false;
     }
 
-    if (ch1.getColor().equals("white")) {
+    if (ch1.getColor().equals(WHITE)) {
       if ((ch1.getPositionX() - ch1.getPositionY() < ch2.getPositionX() - ch2.getPositionY()) ||
           (ch1.getPositionX() + ch1.getPositionY() > ch2.getPositionX() + ch2.getPositionY())){
         isValid = false;

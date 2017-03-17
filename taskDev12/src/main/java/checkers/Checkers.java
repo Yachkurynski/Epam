@@ -8,6 +8,14 @@ import java.util.Scanner;
  * Describes checker.
  */
 public class Checkers {
+  private static final int X_POSITION = 0;
+  private static final int Y_POSITION = 1;
+  private static final int MAX_DESK_BOUND = 8;
+  private static final int MIN_DESK_BOUND = 1;
+  private static final String WHITE = "white";
+  private static final String BLACK = "black";
+  private static final String INVALID_POSITION_MSG = "Invalid position ";
+
   private int positionX;
   private int positionY;
   private String color;
@@ -26,15 +34,16 @@ public class Checkers {
    * @throws IllegalArgumentException when position has invalid value or given color is illegal.
    */
   public Checkers(String position, String color) throws IllegalArgumentException {
-    int x = Positions.valueOf(String.valueOf(position.charAt(0)).toLowerCase()).ordinal() + 1;
-    int y = Integer.parseInt(String.valueOf(position.charAt(1)));
+    int x = Positions.valueOf(String.valueOf(position.charAt(X_POSITION)).toLowerCase()).ordinal()
+        + 1;
+    int y = Integer.parseInt(String.valueOf(position.charAt(Y_POSITION)));
 
     if (isValidPosition(x, y) && isValidColor(color)) {
       this.positionX = x;
       this.positionY = y;
       this.color = color;
     } else {
-      throw new IllegalArgumentException("Invalid position " + position);
+      throw new IllegalArgumentException(INVALID_POSITION_MSG + position);
     }
   }
 
@@ -44,7 +53,7 @@ public class Checkers {
   public void goLeft() {
     positionX--;
 
-    if(color.equals("white")) {
+    if(color.equals(WHITE)) {
       positionY++;
     } else {
       positionY--;
@@ -57,7 +66,7 @@ public class Checkers {
   public void goRight() {
     positionX++;
 
-    if(color.equals("white")) {
+    if(color.equals(WHITE)) {
       positionY++;
     } else {
       positionY--;
@@ -79,7 +88,7 @@ public class Checkers {
    * @return true if color is valid.
    */
   private boolean isValidColor(String color) {
-    return color.toLowerCase().equals("black") || color.toLowerCase().equals("white");
+    return color.toLowerCase().equals(BLACK) || color.toLowerCase().equals(WHITE);
   }
 
   /**
@@ -93,7 +102,8 @@ public class Checkers {
   private boolean isValidPosition(int xPosition, int yPosition) {
     boolean valueToReturn = true;
 
-    if ((xPosition > 9 || xPosition < 0) || (yPosition > 9 || yPosition < 0)) {
+    if ((xPosition >= MAX_DESK_BOUND || xPosition <= MIN_DESK_BOUND) ||
+        (yPosition >= MAX_DESK_BOUND || yPosition <= MIN_DESK_BOUND)) {
       valueToReturn = false;
     } else {
       if ((xPosition + yPosition) % 2 != 0) {
