@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 /**
- *
+ * Tests for login for "mail.ru".
  */
 public class ChromeLoginTest {
   WebDriver chrome;
@@ -32,9 +32,12 @@ public class ChromeLoginTest {
   public void testPositiveLogin() {
     chrome.get("http://mail.ru");
 
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']")).sendKeys("tat-dev13");
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']")).sendKeys("23.03.2017");
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']")).click();
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
+        .sendKeys("tat-dev13");
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
+        .sendKeys("23.03.2017");
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
+        .click();
 
     WebElement actual = chrome.findElement(By.xpath("//div[@id = 'b_letters']"));
 
@@ -45,9 +48,12 @@ public class ChromeLoginTest {
   public void testNegativeWrongLogin() {
     chrome.get("http://mail.ru");
 
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']")).sendKeys("tat-13");
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']")).sendKeys("23.03.2017");
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']")).click();
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
+        .sendKeys("tat-13");
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
+        .sendKeys("23.03.2017");
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
+        .click();
 
     WebElement actual = chrome.findElement(By.xpath("//div[@class='b-login__errors']"));
 
@@ -58,9 +64,12 @@ public class ChromeLoginTest {
   public void testNegativeWrongPassword() {
     chrome.get("http://mail.ru");
 
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']")).sendKeys("tat-dev13");
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']")).sendKeys("23...2017");
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']")).click();
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
+        .sendKeys("tat-dev13");
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
+        .sendKeys("23...2017");
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
+        .click();
 
     WebElement actual = chrome.findElement(By.xpath("//div[@class='b-login__errors']"));
 
@@ -71,9 +80,12 @@ public class ChromeLoginTest {
   public void testNegativeLoginWithSpecialSymbols() {
     chrome.get("http://mail.ru");
 
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']")).sendKeys("t@t-d#v!%");
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']")).sendKeys("23.03.2017");
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']")).click();
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
+        .sendKeys("t@t-d#v!%");
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
+        .sendKeys("23.03.2017");
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
+        .click();
 
     WebElement actual = chrome.findElement(By.xpath("//div[@class='b-login__errors']"));
 
@@ -84,9 +96,12 @@ public class ChromeLoginTest {
   public void testNegativeLoginWithCyrillicSymbols() {
     chrome.get("http://mail.ru");
 
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']")).sendKeys("почта");
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']")).sendKeys("23.03.2017");
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']")).click();
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
+        .sendKeys("почта");
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
+        .sendKeys("23.03.2017");
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
+        .click();
 
     WebElement actual = chrome.findElement(By.xpath("//div[@class='b-login__errors']"));
 
@@ -97,9 +112,12 @@ public class ChromeLoginTest {
   public void testNegativeEmptyLogin() {
     chrome.get("http://mail.ru");
 
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']")).sendKeys("");
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']")).sendKeys("23.03.2017");
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']")).click();
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
+        .sendKeys("");
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
+        .sendKeys("23.03.2017");
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
+        .click();
 
     WebElement actual = chrome.findElement(By.xpath("//div[@class='b-login__errors']"));
 
@@ -109,10 +127,13 @@ public class ChromeLoginTest {
   @Test
   public void testNegativeBigLogin() {
     chrome.get("http://mail.ru");
-    String login = "ItsAVeryBigLoginForCheckingHowDoesTheSystemReactToSuchLogin";
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']")).sendKeys(login);
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']")).sendKeys("23.03.2017");
-    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']")).click();
+    String login = "ItsAVeryBigLoginForCheckingHowDoesTheSystemReactToSuchLongLogin";
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
+        .sendKeys(login);
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
+        .sendKeys("23.03.2017");
+    chrome.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
+        .click();
 
     WebElement actual = chrome.findElement(By.xpath("//div[@class='b-login__errors']"));
 
