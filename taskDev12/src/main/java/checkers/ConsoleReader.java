@@ -8,9 +8,8 @@ import java.io.InputStreamReader;
  * Reads data from console.
  */
 public class ConsoleReader {
-  private static final String INCORRECT_INPUT_MSG = "There is empty input!";
-  private static final String NUMBER_OF_REPEATS_END_MSG = "Number of repeats is ended.";
-  private static final int MAX_NUMBER_OF_REPEATS = 5;
+  private static final String EMPTY_INPUT_MSG = "There is empty input!";
+  private String enteredValue;
 
   /**
    * Reads data from console which depends on given message.
@@ -18,46 +17,23 @@ public class ConsoleReader {
    * @param message hint with name of needed value.
    * @return string representation of needed value.
    */
-  public String readFromConsole(String message) {
+  public String readFromConsole(String message) throws IOException {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    String stringToReturn = "";
-    int numberOfRepeats = 0;
-    boolean needToRepeat = false;
-    boolean repeatsChecker;
+    System.out.println(message);
+    setEnteredValue(reader.readLine().trim());
 
-    do {
-      try {
-        System.out.println(message);
-        stringToReturn = reader.readLine().trim();
-        needToRepeat = false;
-
-        if (stringToReturn.length() == 0) {
-          System.out.println(INCORRECT_INPUT_MSG);
-          needToRepeat = true;
-        }
-      } catch (IOException ex) {
-        System.out.println(ex.getLocalizedMessage());
-      }
-
-      if (!(repeatsChecker = isNeedToRepeatEnter(numberOfRepeats++))) {
-        throw new IllegalArgumentException(NUMBER_OF_REPEATS_END_MSG);
-      }
-    } while (needToRepeat && repeatsChecker);
-    return stringToReturn;
+    if (getEnteredValue().length() == 0) {
+      throw new IOException(EMPTY_INPUT_MSG);
+    }
+    return getEnteredValue();
   }
 
-  /**
-   * Checks that number of repeats less than some fixed value.
-   * @param numberOfRepeats given number of repeats.
-   * @return true if number of repeats less than fixed value.
-   */
-  public boolean isNeedToRepeatEnter(int numberOfRepeats) throws IllegalArgumentException {
-    if (numberOfRepeats == MAX_NUMBER_OF_REPEATS) {
-      System.out.println(NUMBER_OF_REPEATS_END_MSG);
-      return false;
-    } else {
-      return true;
-    }
+  public String getEnteredValue() {
+    return enteredValue;
+  }
+
+  public void setEnteredValue(String enteredValue) {
+    this.enteredValue = enteredValue;
   }
 }
