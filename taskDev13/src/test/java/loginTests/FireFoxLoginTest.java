@@ -2,27 +2,37 @@ package loginTests;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.openqa.selenium.By;
+import mailLogin.WrongAuthorizationData;
+import mailLogin.failedAuthorizationPage.FailedAuthorizationPage;
+import mailLogin.failedAuthorizationPage.FailedAuthorizationPageFirefox;
+import mailLogin.loginPage.LoginPage;
+import mailLogin.mailBoxPage.MailBoxPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 /**
  * Test for login for "mail.ru".
  */
 public class FireFoxLoginTest {
-  WebDriver fireFox;
+  private static final String MAIL_RU = "http://mail.ru";
+  private WebDriver fireFox;
+  private LoginPage loginPage;
+  private MailBoxPage mailsPage;
+  private FailedAuthorizationPage failPage;
 
-  @Before
+  @BeforeMethod
   public void setUp() {
     System.setProperty("webdriver.gecko.driver", ".//geckodriver.exe");
     fireFox = new FirefoxDriver();
+    fireFox.get(MAIL_RU);
+    loginPage = new LoginPage(fireFox);
   }
 
-  @After
+  @AfterMethod
   public void tearDown() {
     fireFox.close();
     fireFox.quit();
@@ -30,113 +40,23 @@ public class FireFoxLoginTest {
 
   @Test
   public void testPositiveLogin() {
-    fireFox.navigate().to("http://mail.ru");
+    loginPage.logIn("tat-dev13", "23.03.2017");
 
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
-        .sendKeys("tat-dev13");
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
-        .sendKeys("23.03.2017");
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
-        .click();
-
-    WebElement actual = fireFox.findElement(By.xpath("//div[@id = 'b_letters']"));
+    mailsPage = new MailBoxPage(fireFox);
+    WebElement actual = mailsPage.getLettersBox();
 
     assertNotNull(actual);
   }
 
-  @Test
-  public void testNegativeWrongLogin() {
-    fireFox.navigate().to("http://mail.ru");
+  @Test (dataProvider = "dataForNegativeAuthorization", dataProviderClass =
+      WrongAuthorizationData.class)
+  public void testNegativeLogin(String login, String password) {
+    loginPage.logIn(login, password);
 
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
-        .sendKeys("tat-13");
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
-        .sendKeys("23.03.2017");
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
-        .click();
-
-    WebElement actual = fireFox.findElement(By.xpath("//div[@id = 'mailbox:authfail']"));
+    failPage = new FailedAuthorizationPageFirefox(fireFox);
+    WebElement actual = failPage.getFailIdentifier();
 
     assertNotNull(actual);
   }
 
-  @Test
-  public void testNegativeWrongPassword() {
-    fireFox.navigate().to("http://mail.ru");
-
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
-        .sendKeys("tat-dev13");
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
-        .sendKeys("2333333");
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
-        .click();
-
-    WebElement actual = fireFox.findElement(By.xpath("//div[@id = 'mailbox:authfail']"));
-
-    assertNotNull(actual);
-  }
-
-  @Test
-  public void testNegativeLoginWithSpecialSymbols() {
-    fireFox.navigate().to("http://mail.ru");
-
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
-        .sendKeys("@lto^#");
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
-        .sendKeys("128vyf45");
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
-        .click();
-
-    WebElement actual = fireFox.findElement(By.xpath("//div[@id = 'mailbox:authfail']"));
-
-    assertNotNull(actual);
-  }
-
-  @Test
-  public void testNegativeLoginWithCyrillicSymbols() {
-    fireFox.navigate().to("http://mail.ru");
-
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
-        .sendKeys("почта");
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
-        .sendKeys("128vyf45");
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
-        .click();
-
-    WebElement actual = fireFox.findElement(By.xpath("//div[@id = 'mailbox:authfail']"));
-
-    assertNotNull(actual);
-  }
-
-  @Test
-  public void testNegativeEmptyLogin() {
-    fireFox.navigate().to("http://mail.ru");
-
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
-        .sendKeys("");
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
-        .sendKeys("128vyf45");
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
-        .click();
-
-    WebElement actual = fireFox.findElement(By.xpath("//div[@id = 'mailbox:authfail']"));
-
-    assertNotNull(actual);
-  }
-
-  @Test
-  public void testNegativeBigLogin() {
-    fireFox.navigate().to("http://mail.ru");
-    String login = "ItsAVeryBigLoginForCheckingHowDoesTheSystemReactToSuchLongLogin";
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__login']"))
-        .sendKeys(login);
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__password']"))
-        .sendKeys("128vyf45");
-    fireFox.findElement(By.xpath("//div[@id = 'mailbox']//input[@id='mailbox__auth__button']"))
-        .click();
-
-    WebElement actual = fireFox.findElement(By.xpath("//div[@id = 'mailbox:authfail']"));
-
-    assertNotNull(actual);
-  }
 }
