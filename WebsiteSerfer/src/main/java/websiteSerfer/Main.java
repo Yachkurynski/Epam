@@ -9,35 +9,40 @@ import websiteSerfer.commandBuilders.CheckPageContentCommandBuilder;
 import websiteSerfer.commandBuilders.CheckPageTitleCommandBuilder;
 import websiteSerfer.commandBuilders.CommandBuilder;
 import websiteSerfer.commandBuilders.OpenCommandBuilder;
+import websiteSerfer.commands.Command;
 import websiteSerfer.instructionReader.InstructionFileReader;
 import websiteSerfer.instructionReader.InstructionReader;
-import websiteSerfer.logger.Logger;
-import websiteSerfer.logger.LoggerToFile;
+import websiteSerfer.logger.ResultLogger;
+import websiteSerfer.logger.ResultLoggerToFile;
 
 /**
  * Reads instructions from text file, performs them and finally save results to other text file.
  */
 public class Main {
+  private static final String INSTRUCTIONS_FILE = "instructions.txt";
+  private static final String RESULTS_FILE = "results.txt";
 
   /**
    * Entry point to the program.
    * @param args are not used.
    */
   public static void main(String[] args) {
-    String fileName = "instructions.txt";
-    WebDriver driver = new ChromeDriver();
-    PageTestProvider provider = new PageTestProvider(driver);
-    InstructionReader reader = new InstructionFileReader(fileName);
-    List<String> instructions = reader.readInstructions();
-
     CommandBuilder builder = new OpenCommandBuilder(new CheckLinkByNameCommandBuilder(
-       new CheckLinkByRefCommandBuilder(new CheckPageContentCommandBuilder(
+        new CheckLinkByRefCommandBuilder(new CheckPageContentCommandBuilder(
             new CheckPageTitleCommandBuilder(null)))));
 
-    CommandPerformer performer = new CommandPerformer(provider, builder);
-    TotalResults results = performer.performCommand(instructions);
-    Logger logger = new LoggerToFile("results.txt", results);
+    WebDriver driver = new ChromeDriver();
+    PageTestProvider provider = new PageTestProvider(driver);
+    InstructionReader reader = new InstructionFileReader(INSTRUCTIONS_FILE);
+    List<String> instructions = reader.readInstructions();
 
-    logger.saveResults();
+    CommandsCreator creator = new CommandsCreator(builder, provider);
+    List<Command> commands = creator.createCommands(instructions);
+
+    CommandExecutor performer = new CommandExecutor(provider);
+    TotalTestResults results = performer.executeCommands(commands, instructions);
+
+    ResultLogger resultLogger = new ResultLoggerToFile(RESULTS_FILE, results);
+    resultLogger.saveResults();
   }
 }

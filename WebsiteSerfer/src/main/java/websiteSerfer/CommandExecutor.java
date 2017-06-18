@@ -1,5 +1,4 @@
 package websiteSerfer;
-
 import java.util.List;
 import org.openqa.selenium.WebDriverException;
 import websiteSerfer.commandBuilders.CommandBuilder;
@@ -8,47 +7,42 @@ import websiteSerfer.commands.Command;
 /**
  * Performs all the commands from given collection of commands.
  */
-public class CommandPerformer {
+public class CommandExecutor {
   private PageTestProvider provider;
-  private CommandBuilder builder;
 
   /**
    * Creates instance of command performer.
    * @param provider command provider which allows to perform commands.
-   * @param builder command builder.
    */
-  public CommandPerformer(PageTestProvider provider, CommandBuilder builder) {
+  public CommandExecutor(PageTestProvider provider) {
     this.provider = provider;
-    this.builder = builder;
   }
 
   /**
    * Performs all the given commands.
-   * @param instructions collection of the commands needed to perform.
+   * @param commands collection of the commands needed to execute.
    * @return instance of test's results.
    */
-  public TotalResults performCommand(List<String> instructions) {
-    TotalResults results = new TotalResults();
-    boolean status = true;
+  public TotalTestResults executeCommands(List<Command> commands, List<String> instructions) {
+    TotalTestResults results = new TotalTestResults();
+    boolean status;
     long begin = 0L;
-    double time = 0.0;
+    double time;
+    int i = 0;
 
-    for (String instruction : instructions) {
-      String[] commands = instruction.split(" ", 2);
+    for (Command command : commands) {
+      String instruction = instructions.get(i++);
+      status = false;
+      time = 0.0;
 
       try {
-        if (commands.length > 1) {
-          Command command = builder.getCommand(commands[0], commands[1], provider);
+        if (command != null) {
           begin = System.currentTimeMillis();
           command.execute();
           status = true;
           time = (double)(System.currentTimeMillis() - begin) / 1000;
-        } else {
-          status = false;
-          time = 0.0;
         }
       } catch (WebDriverException | IllegalArgumentException ex) {
-        status = false;
         time = (double)(System.currentTimeMillis() - begin) / 1000;
       } finally {
         results.addResult(new TestResult(status, instruction, time));

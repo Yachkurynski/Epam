@@ -1,12 +1,12 @@
 package websiteSerfer.logger;
 
-import websiteSerfer.TotalResults;
+import websiteSerfer.TotalTestResults;
 
 /**
  * Parent class for results' loggers.
  */
-public abstract class Logger {
-  protected TotalResults results;
+public abstract class ResultLogger {
+  protected TotalTestResults results;
 
   /**
    * Saves results of commands' performing.

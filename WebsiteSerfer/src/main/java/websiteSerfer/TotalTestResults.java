@@ -6,13 +6,13 @@ import java.util.List;
 /**
  * Contains total results of all the tests.
  */
-public class TotalResults {
+public class TotalTestResults {
   private List<TestResult> results;
 
   /**
    * Creates instance of total result.
    */
-  public TotalResults() {
+  public TotalTestResults() {
     results = new ArrayList<>();
   }
 
