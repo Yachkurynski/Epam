@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 /**
- * Describes search bar on the page.
+ * Describes search bar web-element on the page. Consist of textfield and submit button.
  */
 public class SearchBar {
   private WebDriver driver;

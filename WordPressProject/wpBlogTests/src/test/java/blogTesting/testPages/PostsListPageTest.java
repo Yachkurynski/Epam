@@ -1,5 +1,8 @@
 package blogTesting.testPages;
 
+import static blogTesting.testPages.siteDataForTests.siteConstantData.ADMIN_LOGIN;
+import static blogTesting.testPages.siteDataForTests.siteConstantData.ADMIN_PASSWORD;
+import static blogTesting.testPages.siteDataForTests.siteConstantData.WP_SITE_LOGIN_URL;
 import static org.testng.Assert.*;
 
 import java.util.concurrent.TimeUnit;
@@ -19,7 +22,6 @@ public class PostsListPageTest {
   private WebDriver driver;
   private PostsListPage postsPage;
   private LoginPage loginPage;
-  private AdminPage adminPage;
 
   @BeforeClass
   public void classSetUp() {
@@ -30,11 +32,10 @@ public class PostsListPageTest {
   public void setUp() throws Exception {
     driver = new ChromeDriver();
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    driver.get("http://localhost:8080/wp-admin");
-    loginPage = PageFactory.initElements(driver, LoginPage.class);
-    loginPage.login("admin", "testsForWp");
-    adminPage = PageFactory.initElements(driver, AdminPage.class);
-    postsPage = adminPage.openPostsListPage();
+    driver.get(WP_SITE_LOGIN_URL);
+
+    (PageFactory.initElements(driver, LoginPage.class)).login(ADMIN_LOGIN, ADMIN_PASSWORD);
+    postsPage = (PageFactory.initElements(driver, AdminPage.class)).openPostsListPage();
   }
 
   @AfterMethod
@@ -47,6 +48,7 @@ public class PostsListPageTest {
   public void testPositiveOpenPostByTitle() throws Exception {
     postTitle = "One more post";
     CommentPostPage postPage = postsPage.openPostByTitle(postTitle);
+
     assertEquals(postPage.getPostTitle(), postTitle);
   }
 
@@ -54,6 +56,7 @@ public class PostsListPageTest {
   public void testNegativeOpenPostByTitle() throws Exception {
     postTitle = "Second post";
     CommentPostPage postPage = postsPage.openPostByTitle(postTitle);
+
     assertNull(postPage);
   }
 
@@ -67,6 +70,7 @@ public class PostsListPageTest {
   public void testGetPageTitle() throws Exception {
     String actualTitle = postsPage.getPageTitle();
     String expectedTitle = "Posts Add New";
+
     assertEquals(expectedTitle, actualTitle);
   }
 
@@ -74,6 +78,7 @@ public class PostsListPageTest {
   public void testDeletePost() throws Exception {
     postsPage.deletePostByTitle("MyFirstPostOnWP");
     CommentPostPage post = postsPage.openPostByTitle("MyFirstPostOnWP");
+
     assertNull(post);
   }
 }

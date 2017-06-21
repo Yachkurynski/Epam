@@ -34,6 +34,9 @@ public class CommentPostPage {
   @CacheLookup
   private WebElement postButton;
 
+  @FindBy(xpath = "//ol[@class = 'commentlist']/li[last()]//section[contains(@class, 'content')]/p")
+  private WebElement lastComment;
+
   /**
    * Initialize instance of post page.
    * @param driver web-driver.
@@ -44,7 +47,7 @@ public class CommentPostPage {
   }
 
   /**
-   * Leaves the comment by unauthorized user.
+   * Allows to leave the comment for unauthorized user.
    * @param name user's name.
    * @param email user's email.
    * @param comment user's comment.
@@ -57,7 +60,7 @@ public class CommentPostPage {
   }
 
   /**
-   * Leaves the comment by authorized user.
+   * Allows to leave the comment for authorized user.
    * @param comment user's comment.
    */
   public void leaveCommentForRegisteredUser(String comment) {
@@ -67,15 +70,14 @@ public class CommentPostPage {
 
   /**
    * Returns content of last comment.
-   * @return comment.
+   * @return last comment.
    */
   public String getLastCommentText() {
-    return driver.findElement(By.xpath("//ol[@class = 'commentlist']"
-        + "/li[last()]//section[contains(@class, 'comment-content')]/p")).getText();
+    return lastComment.getText();
   }
 
   /**
-   * Returns web-element which identifies comment leaving error (For example, incorrect data enter).
+   * Returns web-element which identifies comment leaving error (for example, incorrect data enter).
    * @return comment leaving error identifier.
    */
   public WebElement getCommentErrorIdentifier() {
@@ -83,7 +85,7 @@ public class CommentPostPage {
   }
 
   /**
-   * Return title of post. .
+   * Return title of post.
    * @return post's title.
    */
   public String getPostTitle() {

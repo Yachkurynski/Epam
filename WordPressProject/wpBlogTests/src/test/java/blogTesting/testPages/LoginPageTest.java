@@ -1,5 +1,10 @@
 package blogTesting.testPages;
 
+import static blogTesting.testPages.siteDataForTests.siteConstantData.ADMIN_LOGIN;
+import static blogTesting.testPages.siteDataForTests.siteConstantData.ADMIN_PASSWORD;
+import static blogTesting.testPages.siteDataForTests.siteConstantData.SUBSCRIBER_LOGIN;
+import static blogTesting.testPages.siteDataForTests.siteConstantData.SUBSCRIBER_PASSWORD;
+import static blogTesting.testPages.siteDataForTests.siteConstantData.WP_SITE_LOGIN_URL;
 import static org.testng.Assert.*;
 
 import blogTesting.dataProviders.WrongLoginData;
@@ -32,7 +37,7 @@ public class LoginPageTest {
   public void setUp() throws Exception {
     driver = new ChromeDriver();
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    driver.get("http://localhost:8080/wp-login");
+    driver.get(WP_SITE_LOGIN_URL);
     loginPage = PageFactory.initElements(driver, LoginPage.class);
   }
 
@@ -49,17 +54,19 @@ public class LoginPageTest {
 
   @Test
   public void testPositiveAdminLogin() throws Exception {
-    loginPage.login("admin", "testsForWp");
+    loginPage.login(ADMIN_LOGIN, ADMIN_PASSWORD);
     userPage = PageFactory.initElements(driver, AdminPage.class);
     expectedRole = userPage.getUserRoleIdentifier().getText();
+
     assertEquals(expectedRole, "admin");
   }
 
   @Test
   public void testPositiveSubscriberLogin() throws Exception {
-    loginPage.login("subscriber", "subscriberUser");
+    loginPage.login(SUBSCRIBER_LOGIN, SUBSCRIBER_PASSWORD);
     userPage = PageFactory.initElements(driver, UserProfilePage.class);
     expectedRole = userPage.getUserRoleIdentifier().getText();
+
     assertEquals(expectedRole, "subscriber");
   }
 
@@ -67,6 +74,7 @@ public class LoginPageTest {
   public void testNegativeAdminLogin(String login, String password) throws Exception {
     loginPage.login(login, password);
     errorLoginIdentifier = loginPage.getLoginErrorIdentifier();
+
     assertNotNull(errorLoginIdentifier);
   }
 
@@ -74,6 +82,7 @@ public class LoginPageTest {
   public void testNegativeSubscriberLogin(String login, String password) throws Exception {
     loginPage.login(login, password);
     errorLoginIdentifier = loginPage.getLoginErrorIdentifier();
+
     assertNotNull(errorLoginIdentifier);
   }
 }

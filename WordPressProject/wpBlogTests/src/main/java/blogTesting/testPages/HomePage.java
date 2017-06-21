@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 /**
- *
+ * Describes POM for home page of site.
  */
 public class HomePage {
   private WebDriver driver;
@@ -62,7 +62,7 @@ public class HomePage {
   }
 
   /**
-   * Finds given text in posts using search bar.
+   * Finds given text in all the posts using search bar.
    * @param text text for searching.
    * @return page with search results.
    */

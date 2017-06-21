@@ -7,8 +7,8 @@ import org.testng.annotations.DataProvider;
  */
 public class WrongLoginData {
   /**
-   * Returns data with login and passwords for testing wrong admin authorization.
-   * @return array of login and passwords.
+   * Returns data for testing wrong admin authorization. Contains login and password.
+   * @return data for authorization.
    */
   @DataProvider(name = "getWrongAdminLoginData")
   public Object[][] getWrongAdminLoginData() {
@@ -21,8 +21,8 @@ public class WrongLoginData {
   }
 
   /**
-   * Returns data with login and passwords for testing wrong subscriber authorization.
-   * @return array of login and passwords.
+   * Returns data for testing wrong subscriber authorization. Contains login and password.
+   * @return data for authorization.
    */
   @DataProvider(name = "getWrongSubscriberLoginData")
   public Object[][] getWrongSubscriberLoginData() {

@@ -7,8 +7,8 @@ import org.testng.annotations.DataProvider;
  */
 public class PostsContentData {
   /**
-   * Returns data with title and post's content for new posts.
-   * @return array of posts' titles and content.
+   * Returns data for creating new post. Contains title and post's content which are necessary need.
+   * @return array of title and content for new post.
    */
   @DataProvider(name = "getPostData")
   public Object[][] getPostData() {

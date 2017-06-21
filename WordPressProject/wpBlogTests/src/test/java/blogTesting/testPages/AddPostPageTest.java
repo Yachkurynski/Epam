@@ -1,5 +1,9 @@
 package blogTesting.testPages;
 
+import static blogTesting.testPages.siteDataForTests.siteConstantData.ADMIN_LOGIN;
+import static blogTesting.testPages.siteDataForTests.siteConstantData.ADMIN_PASSWORD;
+import static blogTesting.testPages.siteDataForTests.siteConstantData.WP_ADD_POST_PAGE_URL;
+import static blogTesting.testPages.siteDataForTests.siteConstantData.WP_SITE_LOGIN_URL;
 import static org.testng.Assert.*;
 
 import blogTesting.dataProviders.PostsContentData;
@@ -29,9 +33,10 @@ public class AddPostPageTest {
   public void setUp() throws Exception {
     driver = new ChromeDriver();
     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    driver.get("http://localhost:8080/wp-admin");
-    (PageFactory.initElements(driver, LoginPage.class)).login("admin", "testsForWp");
-    driver.get("http://localhost:8080/wp-admin/post-new");
+    driver.get(WP_SITE_LOGIN_URL);
+
+    (PageFactory.initElements(driver, LoginPage.class)).login(ADMIN_LOGIN, ADMIN_PASSWORD);
+    driver.get(WP_ADD_POST_PAGE_URL);
     addPostPage = PageFactory.initElements(driver, AddPostPage.class);
   }
 

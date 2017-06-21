@@ -1,5 +1,6 @@
 package blogTesting.testPages;
 
+import static blogTesting.testPages.siteDataForTests.siteConstantData.WP_SITE_URL;
 import static org.testng.Assert.*;
 
 import java.util.concurrent.TimeUnit;
@@ -32,7 +33,8 @@ public class HomePageTest {
   public void setUp() throws Exception {
     driver = new ChromeDriver();
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    driver.get("http://localhost:8080/");
+    driver.get(WP_SITE_URL);
+
     homePage = PageFactory.initElements(driver, HomePage.class);
   }
 
@@ -46,6 +48,7 @@ public class HomePageTest {
   public void testPositiveOpenPostByTitle() throws Exception {
     String postTitle = "One more post";
     CommentPostPage postPage = homePage.openPostByTitle(postTitle);
+
     assertEquals(postPage.getPostTitle(), postTitle);
   }
 
@@ -53,6 +56,7 @@ public class HomePageTest {
   public void testNegativeOpenPostByTitle() throws Exception {
     String postTitle = "This post not exists";
     CommentPostPage postPage = homePage.openPostByTitle(postTitle);
+
     assertNull(postPage);
   }
 
@@ -61,6 +65,7 @@ public class HomePageTest {
     String stringToSearch = "post";
     searchPage = homePage.search(stringToSearch);
     String pageTitle = searchPage.getSearchPageTitle();
+
     assertEquals(pageTitle, searchPageFoundTitle + " " + stringToSearch.toUpperCase());
   }
 
@@ -68,6 +73,7 @@ public class HomePageTest {
   public void testNegativeSearch() throws Exception {
     searchPage = homePage.search("thisTextWillNotFound");
     String pageTitle = searchPage.getSearchPageTitle();
+
     assertEquals(pageTitle, searchPageNotFoundTitle);
   }
 }

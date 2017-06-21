@@ -4,7 +4,6 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -26,6 +25,9 @@ public class PostsListPage {
   @CacheLookup
   private WebElement pageTitle;
 
+  /**
+   * Describes page which allows to edit the post.
+   */
   public static class EditPostPage {
     private WebDriver driver;
 
@@ -37,14 +39,25 @@ public class PostsListPage {
     @CacheLookup
     private WebElement openPostButton;
 
+    /**
+     * Initialize instance of page.
+     * @param driver web-driver.
+     */
     public EditPostPage(WebDriver driver) {
       this.driver = driver;
     }
 
+    /**
+     * Deletes current post.
+     */
     public void deletePost() {
       deletePostButton.click();
     }
 
+    /**
+     * Opens current post for view.
+     * @return page with current post.
+     */
     public CommentPostPage openPost() {
       openPostButton.click();
       return PageFactory.initElements(driver, CommentPostPage.class);
@@ -61,7 +74,7 @@ public class PostsListPage {
 
   /**
    * Opens post by given title.
-   * @param title needed post title.
+   * @param title title of needed post.
    * @return page with needed post.
    */
   public CommentPostPage openPostByTitle(String title) throws InterruptedException {
@@ -71,7 +84,6 @@ public class PostsListPage {
       WebElement postTitle = post.findElement(By.xpath("./td[contains(@class, 'post-title')]"
           + "//a[@class = 'row-title']"));
 
-      System.out.println(title + " --- " + postTitle.getText());
       if(title.equals(postTitle.getText())) {
         postTitle.click();
         EditPostPage editPage = PageFactory.initElements(driver, EditPostPage.class);
@@ -83,7 +95,7 @@ public class PostsListPage {
   }
 
   /**
-   * Opens page witch allows to add new post.
+   * Opens page which allows to add new post.
    * @return page for adding post.
    */
   public AddPostPage addNewPost() {
@@ -107,9 +119,6 @@ public class PostsListPage {
     for(WebElement post : posts) {
       WebElement postTitle = post.findElement(By.xpath("./td[contains(@class, 'post-title')]"
           + "//a[@class = 'row-title']"));
-
-      System.out.println(postTitle.getText());
-      System.out.println(title);
 
       if(title.equals(postTitle.getText())) {
         postTitle.click();

@@ -39,7 +39,7 @@ public class LoginPage {
   }
 
   /**
-   * Returns element which is login form on the login page.
+   * Returns form for login on the page.
    * @return login form.
    */
   public WebElement getLoginForm() {
@@ -47,7 +47,7 @@ public class LoginPage {
   }
 
   /**
-   * Returns web-element which appears when entered username or password are wrong.
+   * Returns wrong login identifier which appears after unsuccessful attempt.
    * @return web-element which identifies wrong login.
    */
   public WebElement getLoginErrorIdentifier() {
@@ -55,8 +55,7 @@ public class LoginPage {
   }
 
   /**
-   * Performs login on the site.
-   *
+   * Performs login to the site.
    * @param userName user's name.
    * @param password user's password.
    */

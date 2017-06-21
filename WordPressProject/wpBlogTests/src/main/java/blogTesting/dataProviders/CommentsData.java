@@ -3,13 +3,13 @@ package blogTesting.dataProviders;
 import org.testng.annotations.DataProvider;
 
 /**
- * Data provider for leaving the comments.
+ * Data provider for leaving the comments for posts.
  */
 public class CommentsData {
 
   /**
-   * Provides data which are comments for registered users.
-   * @return comments.
+   * Provides data for leaving comments for registered users. Contains only comment content.
+   * @return text for comments.
    */
   @DataProvider(name = "getCommentForRegisteredUsers")
   public Object[][] getCommentForRegisteredUsers() {
@@ -17,7 +17,8 @@ public class CommentsData {
   }
 
   /**
-   * Provides data for leaving comments for unregistered users: name, email and comment.
+   * Provides data for leaving comments for unregistered users. There are commentator's name,
+   * his(her) email and comment content which are necessary need.
    * @return data for leaving comments.
    */
   @DataProvider(name = "getCommentForNotRegisteredUsers")

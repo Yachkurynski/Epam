@@ -6,7 +6,7 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 
 /**
- * Describes POM for page which allows to add new posts.
+ * Describes POM for page of adding new posts.
  */
 public class AddPostPage {
   private WebDriver driver;
@@ -42,7 +42,7 @@ public class AddPostPage {
   }
 
   /**
-   * Adds new post.
+   * Creates new post with given title and content.
    * @param title post's title.
    * @param text post's content.
    */
@@ -53,7 +53,7 @@ public class AddPostPage {
   }
 
   /**
-   * Returns web element which identifies that this post is published.
+   * Returns web element which identifies that current post is published.
    * @return identifier of published post.
    */
   public WebElement getPublishedPostIdentifier() {
@@ -61,7 +61,7 @@ public class AddPostPage {
   }
 
   /**
-   * Deletes published post (current).
+   * Deletes current post.
    */
   public void deletePublishedPost() {
     deletePublishedPost.click();

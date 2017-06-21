@@ -1,5 +1,8 @@
 package blogTesting.testPages;
 
+import static blogTesting.testPages.siteDataForTests.siteConstantData.ADMIN_LOGIN;
+import static blogTesting.testPages.siteDataForTests.siteConstantData.ADMIN_PASSWORD;
+import static blogTesting.testPages.siteDataForTests.siteConstantData.WP_SITE_LOGIN_URL;
 import static org.testng.Assert.*;
 
 import java.util.concurrent.TimeUnit;
@@ -30,8 +33,9 @@ public class AdminPageTest {
   public void setUp() throws Exception {
     driver = new ChromeDriver();
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    driver.get("http://localhost:8080/wp-admin");
-    (PageFactory.initElements(driver, LoginPage.class)).login("admin", "testsForWp");
+    driver.get(WP_SITE_LOGIN_URL);
+
+    (PageFactory.initElements(driver, LoginPage.class)).login(ADMIN_LOGIN, ADMIN_PASSWORD);
     adminPage = PageFactory.initElements(driver, AdminPage.class);
   }
 
@@ -44,6 +48,7 @@ public class AdminPageTest {
   @Test
   public void testOpenPostsListPage() throws Exception {
     expectedTitle = "Posts Add New";
+
     PostsListPage postsPage = adminPage.openPostsListPage();
     String title = postsPage.getPageTitle();
     assertEquals(title, expectedTitle);
@@ -52,6 +57,7 @@ public class AdminPageTest {
   @Test
   public void testOpenUsersListPage() throws Exception {
     expectedTitle = "Users Add New";
+
     UsersListPage usersPage = adminPage.openUsersListPage();
     String title = usersPage.getPageTitle();
     assertEquals(title, expectedTitle);

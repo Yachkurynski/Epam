@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 /**
- * Describes POM for admin's page.
+ * Describes POM for admin's profile page.
  */
 public class AdminPage extends UserProfilePage {
   private static final String PROFILE_URL = "http://localhost:8080/wp-admin/profile";
@@ -23,7 +23,6 @@ public class AdminPage extends UserProfilePage {
   /**
    * Initialize instance of admin's page.
    * @param driver web-driver.
-   * @param profileURL profile's page.
    */
   public AdminPage(WebDriver driver) {
     super(driver);
@@ -31,7 +30,7 @@ public class AdminPage extends UserProfilePage {
   }
 
   /**
-   * Opens page with all the posts.
+   * Opens page from admin menu which contains all the posts.
    * @return instance of page with posts.
    */
   public PostsListPage openPostsListPage() {
@@ -40,7 +39,7 @@ public class AdminPage extends UserProfilePage {
   }
 
   /**
-   * Opens page with all the users.
+   * Opens page from admin menu which contains all the users.
    * @return instance of page with users.
    */
   public UsersListPage openUsersListPage() {

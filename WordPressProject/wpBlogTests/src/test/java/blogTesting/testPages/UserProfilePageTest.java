@@ -1,5 +1,8 @@
 package blogTesting.testPages;
 
+import static blogTesting.testPages.siteDataForTests.siteConstantData.SUBSCRIBER_LOGIN;
+import static blogTesting.testPages.siteDataForTests.siteConstantData.SUBSCRIBER_PASSWORD;
+import static blogTesting.testPages.siteDataForTests.siteConstantData.WP_SITE_LOGIN_URL;
 import static org.testng.Assert.*;
 
 import java.util.concurrent.TimeUnit;
@@ -29,8 +32,9 @@ public class UserProfilePageTest {
   public void setUp() throws Exception {
     driver = new ChromeDriver();
     driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    driver.get("http://localhost:8080/wp-login");
-    (PageFactory.initElements(driver, LoginPage.class)).login("subscriber", "subscriberUser");
+    driver.get(WP_SITE_LOGIN_URL);
+
+    (PageFactory.initElements(driver, LoginPage.class)).login(SUBSCRIBER_LOGIN, SUBSCRIBER_PASSWORD);
     userPage = PageFactory.initElements(driver, UserProfilePage.class);
   }
 
